@@ -1,16 +1,50 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql } from "gatsby"
+import { Jumbo } from "../components/"
+import { Layout, SEO, Products } from "../components"
 
-import { Layout, SEO } from "../components"
+//Los querys de graphql solo se pueden ejecutar en las paginas.
+export const query = graphql`
+  query {
+    allSite {
+      edges {
+        node {
+          siteMetadata {
+            description
+          }
+        }
+      }
+    }
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+    allStripePrice {
+      edges {
+        node {
+          unit_amount
+          id
+          product {
+            name
+            metadata {
+              img
+              descripcion
+              wear
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
+//El query le llega  a la pagina como un prop
+const IndexPage = ({ data }) => {
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <Jumbo
+        descripcion={data.allSite.edges[0].node.siteMetadata.descripcion}
+      />
+      <Products products={data.allStripePrice.edges} />
+    </Layout>
+  )
+}
 export default IndexPage
