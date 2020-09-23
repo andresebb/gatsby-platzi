@@ -11,7 +11,7 @@ const Fail = () => {
         <h2>No se pudo procesar tu compra</h2>
         <p>Espero lo disfurtes, lucelo con orgullo</p>
         <p>Te esperamos de vuelta no pares de aprender!</p>
-        <span rol="img" aria-label-="emoji">
+        <span rol="img" aria-label="emoji">
           ❤
         </span>
         <Link to="/">

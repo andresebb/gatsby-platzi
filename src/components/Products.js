@@ -11,8 +11,8 @@ const Product = ({ products }) => {
         {products.map(({ node }) => {
           const price = formatPrice(node.unit_amount)
           return (
-            <article key="node.id">
-              <img src={node.product.metadata.img} alt="" />
+            <article key={node.id}>
+              <img height="100px" src={node.product.metadata.img} alt="" />
               <p>{node.product.name}</p>
               <small>USD {price}</small>
               <Link to={`/${node.id}`}>
