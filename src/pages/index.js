@@ -3,7 +3,9 @@ import { graphql } from "gatsby"
 import { Jumbo } from "../components/"
 import { Layout, SEO, Products } from "../components"
 
-//Los querys de graphql solo se pueden ejecutar en las paginas.
+/*Los querys de graphql solo se pueden ejecutar en las paginas(de esta manera, 
+  en los componentes se usa ya se staticquery o useStaticquery
+*/
 export const query = graphql`
   query {
     allSite {

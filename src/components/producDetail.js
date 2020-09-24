@@ -9,16 +9,33 @@ import {
   StyledProductDetail,
   QtySelect,
 } from "../styles/Components"
-import { SEO } from "./"
+import { SEO, Stars } from "./"
 
 export default function ProductDetails({
   id,
-  unit_mount,
+  unit_amount,
   product: { name, metadata },
 }) {
-  const price = priceFormat(unit_mount)
+  const price = priceFormat(unit_amount)
+  const resetPrice = price.split("$")
+  const newPrice = parseInt(resetPrice[1])
+  const [precio, setPrecio] = useState({
+    precioInicial: newPrice,
+    dinero: newPrice,
+  })
   const [size, setSize] = useState(2)
   const [quantity, setQuantity] = useState(1)
+
+  const quitPriceAndQty = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1)
+      setPrecio({ ...precio, dinero: precio.dinero - precio.precioInicial })
+    }
+  }
+  const setPriceAndQty = () => {
+    setQuantity(quantity + 1)
+    setPrecio({ ...precio, dinero: precio.dinero + precio.precioInicial })
+  }
   return (
     <StyledProductDetail>
       <SEO title={name} />
@@ -26,7 +43,9 @@ export default function ProductDetails({
       <div>
         <Tag>Popular</Tag>
         <h2>{name}</h2>
-        <b>USD: {price}</b>
+        <b>USD: {precio.dinero}</b>
+        <Stars />
+        <small>{metadata.descripcion}</small>
         {metadata.wear && (
           <SizeSelect selected={size}>
             <SizeButton onClick={() => setSize(1)}>XS</SizeButton>
@@ -37,13 +56,9 @@ export default function ProductDetails({
         )}
         <p>Quantity:</p>
         <QtySelect>
-          <button
-            onClick={() => (quantity > 1 ? setQuantity(quantity - 1) : null)}
-          >
-            -
-          </button>
+          <button onClick={quitPriceAndQty}>-</button>
           <input type="text" disabled value={quantity} />
-          <button onClick={() => setQuantity(quantity + 1)}>+</button>
+          <button onClick={setPriceAndQty}>+</button>
         </QtySelect>
       </div>
     </StyledProductDetail>

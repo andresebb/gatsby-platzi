@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, StaticQuery } from "gatsby"
+import { graphql, StaticQuery, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 
 /* gatsby-image:
@@ -9,25 +9,26 @@ cargar las versiones más livianas de nuestras imágenes
 y luego cambiarlas por las versiones actualizadas de mejor calidad, 
 todo esto con el fin de mejorar el tiempo de carga inicial de nuestra aplicación. */
 
-/* <StaticQuery "Que trae de grapql" | render />*/
+/* 
+  EL staticQuery lo podemos usar donde sea,
+  Es la forma de hacer peticiones a graphql desde componentes
+<StaticQuery "Que trae de grapql" | render />*/
 
 const Image = ({ name }) => {
-  return (
-    <StaticQuery
-      query={graphql`
-        query GET_DATA {
-          icon: file(relativePath: { eq: "icon.png" }) {
-            childImageSharp {
-              fluid(maxWidth: 1000) {
-                ...GatsbyImageSharpFluid
-              }
+  const data = useStaticQuery(
+    graphql`
+      query GET_DATA {
+        icon: file(relativePath: { eq: "icon.png" }) {
+          childImageSharp {
+            fluid(maxWidth: 1000) {
+              ...GatsbyImageSharpFluid
             }
           }
         }
-      `}
-      render={(data) => <Img fluid={data[name].childImageSharp.fluid} />}
-    />
+      }
+    `
   )
+  return <Img fluid={data[name].childImageSharp.fluid} />
 }
 
 export default Image
