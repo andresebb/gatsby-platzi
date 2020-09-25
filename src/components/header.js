@@ -1,11 +1,13 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useContext } from "react"
 import { MenuItem, StyledHeader } from "../styles/components"
 import Logo from "../images/Logo.png"
 import Carro from "../images/cart.png"
+import { CartContext } from "../context"
 
-const Header = ({ siteTitle }) => {
+const Header = () => {
+  const props = useContext(CartContext)
   return (
     <StyledHeader>
       <Link to="/">
@@ -23,6 +25,7 @@ const Header = ({ siteTitle }) => {
             <Link to="/cart">
               <span>
                 <img src={Carro} alt="carro" />
+                {props.cart.length}
               </span>
             </Link>
           </MenuItem>

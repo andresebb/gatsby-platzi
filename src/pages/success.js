@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Layout, SEO } from "../components"
+import { SEO } from "../components"
 import { Button, Purchase } from "../styles/components"
 
 const Success = () => {
   return (
-    <Layout>
+    <>
       <SEO title="Compra exitosa" />
       <Purchase>
         <h2>Compra exitosa</h2>
@@ -18,7 +18,7 @@ const Success = () => {
           <Button>Volver al catalogo</Button>
         </Link>
       </Purchase>
-    </Layout>
+    </>
   )
 }
 

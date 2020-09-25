@@ -14,10 +14,13 @@ Se ejecuta cuando la pagina ya ha hecho render
  */
 
 //Esto envuelve en cada pagina el layout
+//Envolvemos toda la app con el provider
+import React from "react"
+import Layout from "./src/components/Layout"
+const { CartProvider } = require("./src/context")
 
-//Se supone que lo debia hacer asi pero no me funciono
-/* const React = require("react")
-const Layout = require("./src/components/layout").default
-
-exports.wrapRootElement = ({ element }) => <Layout>{element}</Layout>
- */
+export const wrapRootElement = ({ element }) => (
+  <CartProvider>
+    <Layout>{element}</Layout>
+  </CartProvider>
+)

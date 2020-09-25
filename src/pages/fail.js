@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Layout, SEO } from "../components"
+import { SEO } from "../components"
 import { Button, Purchase } from "../styles/components"
 
 const Fail = () => {
   return (
-    <Layout>
+    <>
       <SEO title="Compra exitosa" />
       <Purchase>
         <h2>No se pudo procesar tu compra</h2>
@@ -16,7 +16,7 @@ const Fail = () => {
           <Button>Volver al catalogo</Button>
         </Link>
       </Purchase>
-    </Layout>
+    </>
   )
 }
 
