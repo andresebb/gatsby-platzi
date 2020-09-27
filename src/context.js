@@ -8,7 +8,18 @@ export const CartProvider = ({ children }) => {
 
   //Agregar al carrito
   const addToCart = element => {
-    setCart([...cart, element])
+    const exist = cart.find(item => item.id === element.id)
+    if (exist) {
+      setCart(
+        cart.map(item =>
+          item.id === exist.id
+            ? { ...item, quantity: item.quantity + element.quantity }
+            : item
+        )
+      )
+    } else {
+      setCart([...cart, element])
+    }
   }
   //En value se le agrega las propiedades que se le van a proveer a toda la app
   return (
