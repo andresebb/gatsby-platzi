@@ -4,14 +4,10 @@ import { Button, StyledCart } from "../styles/components"
 import { CartContext } from "../context"
 import { loadStripe } from "@stripe/stripe-js"
 
-const stripePromise = loadStripe(
-  "pk_test_51HTcrZHu94wrZKIKzR0OEW1lIydXOEN0tpCsixuceKg3cEMtmCkxk6hIetcf63avXEiq4mn8pXtuOpJLs8uef6rm00tGcDL9W5"
-)
-debugger
-
 export default function Cart() {
   const { cart } = useContext(CartContext)
   const [total, setTotal] = useState(0)
+  const [stripe, setStripe] = useState()
 
   //Obtener el total
   const getTotal = () => {
@@ -25,19 +21,18 @@ export default function Cart() {
 
   useEffect(() => {
     getTotal()
-    /* setStripe(window.Stripe(process.env.STRIPE_PK)) */
+    setStripe(window.Stripe(process.env.STRIPE_PK))
   }, [])
 
   //Configurando Stripe
   const handleSubmit = async e => {
     e.preventDefault()
-
+    //Obtenemos el id y cantindad para pasarlo a lineitems
     let prod = cart.map(({ id, quantity }) => ({
       price: id,
       quantity: quantity,
     }))
 
-    const stripe = await stripePromise
     const { error } = await stripe.redirectToCheckout({
       lineItems: prod,
       mode: "payment",
